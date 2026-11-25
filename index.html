@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DeutschStudio Pro v6.0 (Ổn định) - Luyện Phát Âm & Giao Tiếp Tiếng Đức AI</title>
+    <title>DeutschStudio Pro v6.0.2 - Luyện Phát Âm & Giao Tiếp Tiếng Đức AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Noto+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <script>
@@ -38,11 +38,11 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-teal-200 selection:text-teal-950 min-h-screen flex flex-col">
 
-    <!-- THANH TỰ PHỤC HỒI LỖI KHẨN CẤP (CHỈ HIỆN KHI CÓ LỖI RUNTIME) -->
+    <!-- THANH TỰ PHỤC HỒI LỖI KHẨN CẤP -->
     <div id="global-crash-banner" class="hidden bg-rose-600 text-white px-4 py-3 text-xs sm:text-sm font-semibold flex flex-wrap items-center justify-between gap-2 z-50 shadow-lg">
         <div class="flex items-center gap-2">
             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
-            <span id="global-crash-msg">Phát hiện xung đột bộ nhớ tạm từ phiên bản cũ.</span>
+            <span id="global-crash-msg">Phát hiện xung đột bộ nhớ tạm.</span>
         </div>
         <button onclick="hardResetStorageAndReload()" class="bg-white text-rose-700 hover:bg-rose-50 font-extrabold px-3.5 py-1.5 rounded-xl text-xs shadow-sm transition">
             Sửa lỗi bộ nhớ &amp; Tải lại
@@ -58,7 +58,6 @@
     <!-- HEADER CHÍNH -->
     <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
-            <!-- Logo & Phiên bản -->
             <div class="flex items-center gap-2.5 shrink-0">
                 <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-teal-700 via-teal-600 to-emerald-600 flex items-center justify-center text-white font-extrabold text-lg shadow-sm">
                     DS
@@ -69,24 +68,22 @@
                             DeutschStudio <span class="text-teal-600">Pro</span>
                         </h1>
                         <span class="px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-200">
-                            v6.0 • Ổn định
+                            v6.0.2
                         </span>
                     </div>
                     <p class="text-[11px] text-slate-500 hidden md:block mt-0.5">Luyện Ngữ pháp, Hội thoại Người bản xứ &amp; Phát âm Tiếng Đức AI</p>
                 </div>
             </div>
 
-            <!-- Cụm công cụ phải -->
             <div class="flex items-center gap-1.5 sm:gap-2">
                 <div class="hidden sm:flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs font-extrabold" title="Chuỗi ngày luyện tập">
                     <span>🔥</span>
                     <span id="header-streak-text">1 ngày</span>
                 </div>
 
-                <button onclick="openSystemDrawer()" class="px-2.5 sm:px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center gap-1.5 transition" title="Kiểm tra Micro, Giọng đọc & API Key">
-                    <span id="header-ai-dot" class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                    <span class="hidden sm:inline">Hệ thống AI</span>
-                    <span class="sm:hidden">AI</span>
+                <button onclick="openSystemDrawer()" class="px-2.5 sm:px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center gap-1.5 transition" title="Cấu hình Gemini API Key, Micro & Giọng đọc">
+                    <span id="header-ai-dot" class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                    <span id="header-ai-label">Hệ thống AI</span>
                 </button>
 
                 <button onclick="exportDataJSON()" class="px-2.5 sm:px-3 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 text-xs font-bold flex items-center gap-1 transition" title="Tải file sao lưu dữ liệu">
@@ -129,7 +126,6 @@
                     class="w-full rounded-2xl border border-slate-300 bg-slate-50/60 focus:bg-white p-4 text-base sm:text-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/30"
                     placeholder="Ví dụ: Gestern ich habe nach Hause gegangen weil ich war müde..."></textarea>
 
-                <!-- Bàn phím ký tự đặc biệt tiếng Đức -->
                 <div class="flex flex-wrap items-center justify-between gap-2">
                     <div class="flex flex-wrap items-center gap-1.5">
                         <span class="text-xs font-semibold text-slate-400 mr-1">Ký tự Đức:</span>
@@ -171,7 +167,6 @@
                         </div>
                     </div>
 
-                    <!-- Phiên bản đã sửa hoàn chỉnh -->
                     <div class="bg-emerald-50/80 border border-emerald-200 rounded-2xl p-4 sm:p-5 space-y-2.5">
                         <div class="flex flex-wrap items-center justify-between gap-2">
                             <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-800">Câu đã sửa chuẩn ngữ pháp:</span>
@@ -191,13 +186,11 @@
                         <p id="an-vietnamese-meaning" class="text-xs sm:text-sm text-slate-600 italic"></p>
                     </div>
 
-                    <!-- Chi tiết các lỗi sai -->
                     <div class="space-y-2">
                         <h4 class="text-xs font-extrabold uppercase tracking-wider text-rose-700">Chi tiết lỗi cần lưu ý:</h4>
                         <div id="an-errors-list" class="space-y-2"></div>
                     </div>
 
-                    <!-- Gợi ý diễn đạt thông dụng như người bản xứ -->
                     <div class="space-y-2">
                         <h4 class="text-xs font-extrabold uppercase tracking-wider text-teal-800">Gợi ý cách nói tự nhiên &amp; thông dụng hơn:</h4>
                         <div id="an-alternatives-list" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
@@ -210,7 +203,6 @@
         <!-- TAB 2: PHÒNG LUYỆN PHÁT ÂM, CHUNKING & SHADOWING (STUDIO)           -->
         <!-- =================================================================== -->
         <section id="view-studio" class="hidden space-y-5">
-            <!-- Thanh nhập câu / đoạn văn & Nút quét Ảnh/Audio -->
             <div class="bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-2xs space-y-3">
                 <div class="flex flex-wrap items-center justify-between gap-2">
                     <span class="text-xs sm:text-sm font-bold text-slate-800">Nhập câu hoặc đoạn văn dài để tách từng câu luyện đọc:</span>
@@ -229,7 +221,6 @@
                 </div>
             </div>
 
-            <!-- Bộ điều hướng từng câu & Thanh tiến độ -->
             <div class="bg-white rounded-3xl p-5 sm:p-7 border border-slate-200/80 shadow-2xs space-y-5">
                 <div class="flex flex-wrap items-center justify-between gap-2">
                     <div class="flex items-center gap-2">
@@ -245,16 +236,13 @@
                     </div>
                 </div>
 
-                <!-- Các nút nhảy nhanh từng câu -->
                 <div id="studio-sentence-pills" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1"></div>
 
-                <!-- Khu vực hiển thị câu luyện đọc (bấm từng từ để nghe) -->
                 <div class="bg-slate-50 rounded-3xl p-5 sm:p-7 border border-slate-200/80 text-center space-y-4">
                     <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Chạm vào từng từ bất kỳ để nghe phát âm từ đó</p>
                     <div id="studio-words-stage" class="flex flex-wrap justify-center gap-2 text-xl sm:text-2xl font-extrabold text-slate-900 leading-relaxed"></div>
                     <div id="studio-intonation-hint" class="hidden text-xs font-semibold text-teal-800 bg-teal-50 border border-teal-200 rounded-xl px-3 py-2 inline-block"></div>
 
-                    <!-- Nút nghe mẫu & Shadowing -->
                     <div class="flex flex-wrap justify-center gap-2.5 pt-2">
                         <button onclick="speakCurrentStudioSentence(1.0)" class="px-4 py-2.5 rounded-2xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs sm:text-sm shadow-2xs transition">
                             🔊 Đọc chuẩn (1.0x)
@@ -268,7 +256,6 @@
                     </div>
                 </div>
 
-                <!-- Khu vực Ghi âm & Chấm điểm -->
                 <div class="flex flex-col items-center justify-center bg-slate-50/70 rounded-3xl p-5 border border-slate-200/70 space-y-3">
                     <button id="btn-studio-record" onclick="toggleStudioRecording()" class="px-7 py-4 rounded-2xl bg-gradient-to-r from-teal-600 to-emerald-600 text-white font-extrabold text-sm sm:text-base shadow-lg flex items-center gap-2.5 transition active:scale-95">
                         <span id="studio-mic-dot" class="w-3 h-3 rounded-full bg-white"></span>
@@ -285,7 +272,6 @@
                     <p class="text-xs sm:text-sm font-bold text-teal-800">AI đang phân tích sóng âm thực tế: Tốc độ, Ngữ điệu và Độ chính xác từng từ...</p>
                 </div>
 
-                <!-- Bảng điểm Phát âm Studio -->
                 <div id="studio-result-box" class="hidden rounded-3xl p-5 sm:p-6 bg-white border-2 border-teal-200 space-y-4">
                     <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
                         <h4 class="font-extrabold text-base sm:text-lg text-slate-900">Kết quả Chấm điểm Phát âm AI</h4>
@@ -357,7 +343,6 @@
                 <p class="font-bold text-sm text-slate-700">AI đang chép lời thô, lọc từ ngập ngừng và khôi phục ý định theo chủ đề...</p>
             </div>
 
-            <!-- Phiên âm Kép & Đánh giá Nói tự do -->
             <div id="fs-result-box" class="hidden bg-white rounded-3xl p-5 sm:p-7 border border-slate-200/80 shadow-2xs space-y-5">
                 <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
                     <h3 class="font-extrabold text-base sm:text-lg text-slate-900">Phiên âm Kép &amp; Chấm điểm Nói Tự Do</h3>
@@ -401,7 +386,6 @@
         <!-- TAB 4: HỘI THOẠI THEO CHỦ ĐỀ VỚI NGƯỜI BẢN XỨ AI (ROLEPLAY)         -->
         <!-- =================================================================== -->
         <section id="view-roleplay" class="hidden space-y-5">
-            <!-- BƯỚC 1 & 2: MÀN HÌNH THIẾT LẬP HỘI THOẠI -->
             <div id="rp-setup-panel" class="bg-white rounded-3xl p-5 sm:p-7 border border-slate-200/80 shadow-2xs space-y-6">
                 <div>
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 mb-1">
@@ -410,7 +394,6 @@
                     <h2 class="font-extrabold text-lg sm:text-xl text-slate-900">Hội thoại Giọng nói với Người bản xứ AI</h2>
                 </div>
 
-                <!-- Chọn 1 trong 3 Chế độ luyện tập -->
                 <div class="space-y-2">
                     <label class="text-xs font-extrabold uppercase tracking-wider text-slate-600">1. Chọn Chế độ Luyện tập:</label>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -429,7 +412,6 @@
                     </div>
                 </div>
 
-                <!-- Chọn 8 Chủ đề & Tình huống nhỏ -->
                 <div id="rp-categories-wrapper" class="space-y-3">
                     <label class="text-xs font-extrabold uppercase tracking-wider text-slate-600">2. Chọn Chủ đề &amp; Tình huống hội thoại:</label>
                     <div id="rp-category-tabs" class="flex flex-wrap gap-1.5"></div>
@@ -440,7 +422,6 @@
                     </div>
                 </div>
 
-                <!-- Thiết lập Trình độ, Độ khó, Vai trò, Tốc độ -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
                     <div>
                         <label class="block text-[11px] font-extrabold uppercase text-slate-500 mb-1">Trình độ tiếng Đức</label>
@@ -477,7 +458,6 @@
                     </div>
                 </div>
 
-                <!-- Tùy chọn Phụ đề, Dịch Việt, Gợi ý & Nhiệm vụ Ngữ pháp Sống -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-teal-50/60 border border-teal-200 rounded-2xl p-4 space-y-2.5">
                         <span class="text-xs font-extrabold uppercase tracking-wider text-teal-900">Tùy chọn hiển thị khi nói:</span>
@@ -504,7 +484,6 @@
                     </div>
                 </div>
 
-                <!-- Hồ sơ Ghi nhớ Lỗi Cá nhân -->
                 <div id="rp-memory-banner" class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-2 text-xs">
                     <div id="rp-memory-summary" class="text-slate-600 font-medium">
                         🧠 <strong>Ghi nhớ lỗi cá nhân:</strong> AI sẽ tự động ghi lại các lỗi ngữ pháp/phát âm bạn hay mắc để lồng ghép luyện lại ở các buổi sau.
@@ -517,9 +496,8 @@
                 </button>
             </div>
 
-            <!-- BƯỚC 3: PHÒNG HỘI THOẠI TRỰC TIẾP -->
+            <!-- PHÒNG HỘI THOẠI TRỰC TIẾP -->
             <div id="rp-chat-stage" class="hidden bg-white rounded-3xl border border-slate-200/80 shadow-md overflow-hidden flex flex-col">
-                <!-- Header Phòng Hội thoại -->
                 <div class="bg-slate-900 text-white p-4 sm:p-5 space-y-3">
                     <div class="flex flex-wrap items-center justify-between gap-2">
                         <div>
@@ -553,14 +531,11 @@
                         </div>
                     </div>
 
-                    <!-- Thanh theo dõi Nhiệm vụ Ngữ pháp Sống -->
                     <div id="rp-stage-missions-bar" class="hidden flex flex-wrap gap-1.5 pt-2 border-t border-white/10"></div>
                 </div>
 
-                <!-- Khung Tin nhắn Hội thoại -->
                 <div id="rp-messages-container" class="p-4 sm:p-6 space-y-4 max-h-[55vh] overflow-y-auto bg-slate-50/70"></div>
 
-                <!-- Hộp Phao Gợi ý Trả lời -->
                 <div id="rp-hint-drawer" class="hidden bg-amber-50 border-t border-amber-200 p-4 space-y-2">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-extrabold text-amber-900">💡 Phao gợi ý cách đáp lại phù hợp ngữ cảnh:</span>
@@ -569,7 +544,6 @@
                     <div id="rp-hint-items" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
                 </div>
 
-                <!-- Thanh Điều khiển Giọng nói Người học -->
                 <div class="p-4 sm:p-5 bg-white border-t border-slate-200 space-y-3">
                     <div class="flex flex-wrap items-center justify-center gap-2">
                         <button onclick="replayLastAiMessage(rpConfig.speed)" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs">
@@ -596,7 +570,7 @@
                 </div>
             </div>
 
-            <!-- BƯỚC 4: BÁO CÁO TỔNG KẾT SAU HỘI THOẠI -->
+            <!-- BÁO CÁO TỔNG KẾT SAU HỘI THOẠI -->
             <div id="rp-summary-panel" class="hidden bg-white rounded-3xl p-5 sm:p-7 border-2 border-emerald-200 shadow-md space-y-5">
                 <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4">
                     <div>
@@ -614,7 +588,6 @@
                 </div>
 
                 <div id="rp-sum-stats-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
-                <div id="rp-sum-details" class="space-y-3"></div>
                 <div class="space-y-2">
                     <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-600">Nghe lại bản ghi âm &amp; Luyện lại từng câu của bạn:</h4>
                     <div id="rp-sum-turns-list" class="space-y-2.5"></div>
@@ -646,7 +619,6 @@
                 </div>
             </div>
 
-            <!-- Chế độ A: Nghe chép chính tả -->
             <div id="drill-panel-dictation" class="bg-white rounded-3xl p-5 sm:p-7 border border-slate-200/80 shadow-2xs space-y-4">
                 <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
                     <div class="flex items-center gap-2">
@@ -701,7 +673,6 @@
                 </div>
             </div>
 
-            <!-- Chế độ B: Phản xạ Đổi thì / Đổi ngôi -->
             <div id="drill-panel-transform" class="hidden bg-white rounded-3xl p-5 sm:p-7 border border-slate-200/80 shadow-2xs space-y-4">
                 <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
                     <div class="flex items-center gap-2">
@@ -767,7 +738,6 @@
                     </button>
                 </div>
 
-                <!-- Ô tự nhập từ vựng -->
                 <div class="flex flex-col sm:flex-row gap-2">
                     <input type="text" id="ph-custom-input"
                         class="flex-1 rounded-2xl border border-slate-300 bg-slate-50/60 focus:bg-white px-4 py-2.5 text-sm sm:text-base text-slate-900"
@@ -786,13 +756,11 @@
                     <button type="button" onclick="insertChar('ph-custom-input','ß')" class="w-8 h-8 rounded-lg bg-slate-100 font-bold text-xs border">ß</button>
                 </div>
 
-                <!-- Danh sách từ tự nhập -->
                 <div class="space-y-1.5">
                     <span class="text-xs font-bold text-slate-500">Từ vựng của bạn (chạm để chọn luyện):</span>
                     <div id="ph-custom-words-list" class="flex flex-wrap gap-2"></div>
                 </div>
 
-                <!-- 5 Nhóm âm mẫu tiếng Đức -->
                 <div class="space-y-2 pt-2 border-t border-slate-100">
                     <span class="text-xs font-bold text-slate-500">Hoặc chọn 5 nhóm âm mẫu chuẩn tiếng Đức:</span>
                     <div id="ph-preset-groups" class="flex flex-wrap gap-1.5"></div>
@@ -800,7 +768,6 @@
                 </div>
             </div>
 
-            <!-- Thẻ Luyện Phát âm Active Recall (Ẩn phiên âm & nghĩa cho đến khi đọc) -->
             <div class="bg-white rounded-3xl p-5 sm:p-7 border border-slate-200/80 shadow-2xs space-y-5">
                 <div class="bg-slate-50 rounded-3xl p-6 border border-slate-200 text-center space-y-3">
                     <span class="px-3 py-1 rounded-full text-[11px] font-extrabold bg-emerald-100 text-emerald-800 uppercase">Đang luyện từ (Chế độ Ẩn Đáp Án)</span>
@@ -830,7 +797,6 @@
                     </div>
                 </div>
 
-                <!-- Kết quả chấm điểm & Thẻ từ vựng đã mở khóa -->
                 <div id="ph-unlocked-panel" class="hidden space-y-4">
                     <div id="ph-score-banner" class="hidden rounded-2xl p-4 border space-y-1.5">
                         <div class="flex items-center justify-between">
@@ -897,7 +863,6 @@
         <!-- TAB 8: ÔN TẬP THÔNG MINH, BẢN ĐỒ NHÓM ÂM & KHỞI ĐỘNG 2 PHÚT         -->
         <!-- =================================================================== -->
         <section id="view-review" class="hidden space-y-5">
-            <!-- 4 Thẻ thống kê tổng quan -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
                 <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/80">
                     <span class="text-xs font-bold uppercase text-amber-600">Chuỗi luyện tập</span>
@@ -917,7 +882,6 @@
                 </div>
             </div>
 
-            <!-- Bản đồ Nhóm âm hay sai (Phonetic Heatmap) & Khởi động 2 phút -->
             <div class="bg-white rounded-3xl p-5 sm:p-7 border-2 border-teal-200 shadow-2xs space-y-4">
                 <div class="flex flex-wrap items-center justify-between gap-3">
                     <div>
@@ -933,7 +897,6 @@
                 <div id="rv-heatmap-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
             </div>
 
-            <!-- Ngân hàng Từ hay phát âm sai (Error Bank) -->
             <div class="bg-white rounded-3xl p-5 sm:p-7 border border-slate-200/80 shadow-2xs space-y-4">
                 <h3 class="font-extrabold text-base sm:text-lg text-slate-900">Ngân hàng Từ hay phát âm sai (Đọc đúng 2 lần liên tiếp để xóa khỏi danh sách)</h3>
                 <div id="rv-error-bank-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
@@ -948,11 +911,11 @@
     <div id="system-drawer-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 border border-slate-200 shadow-2xl space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 class="font-extrabold text-lg text-slate-900">Trạng thái Hệ thống &amp; Âm thanh</h3>
+                <h3 class="font-extrabold text-lg text-slate-900">Trạng thái Hệ thống &amp; Google AI</h3>
                 <button onclick="closeSystemDrawer()" class="w-8 h-8 rounded-xl bg-slate-100 text-slate-600 font-bold">✕</button>
             </div>
 
-            <div class="space-y-2.5 text-xs sm:text-sm">
+            <div class="space-y-3 text-xs sm:text-sm">
                 <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                     <span>🎙️ Quyền Micro ghi âm:</span>
                     <button onclick="testMicrophoneAccess()" id="sys-mic-status" class="px-3 py-1 rounded-xl bg-teal-600 text-white font-bold text-xs">Kiểm tra Mic</button>
@@ -966,13 +929,22 @@
                     <p id="sys-tts-status" class="text-[11px] text-slate-500">Đang kiểm tra bộ giọng đọc của thiết bị...</p>
                 </div>
 
-                <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                    <label class="block font-bold text-xs text-slate-700">🔑 Gemini API Key cá nhân (Tùy chọn khi xuất file chạy ngoài):</label>
-                    <div class="flex gap-1.5">
-                        <input type="password" id="sys-api-key-input" class="flex-1 rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-xs" placeholder="AIzaSy...">
-                        <button onclick="saveCustomApiKey()" class="px-3 py-1.5 rounded-xl bg-slate-900 text-white font-bold text-xs">Lưu</button>
+                <div class="p-3.5 rounded-2xl bg-teal-50/60 border border-teal-200 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <label class="font-extrabold text-xs text-teal-950">🔑 Gemini API Key (Google AI Studio):</label>
+                        <span id="sys-key-badge" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800">Chưa nhập Key</span>
                     </div>
-                    <p class="text-[11px] text-slate-500">Mặc định hệ thống dùng sẵn kết nối AI tích hợp; bạn chỉ cần nhập nếu chạy tệp HTML độc lập bên ngoài.</p>
+                    <div class="flex gap-1.5">
+                        <input type="password" id="sys-api-key-input" class="flex-1 rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-mono" placeholder="AIzaSy...">
+                        <button onclick="saveCustomApiKey()" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs">Lưu</button>
+                    </div>
+                    <div class="flex items-center justify-between gap-2 pt-1">
+                        <button id="btn-test-gemini-ping" onclick="testGeminiConnection()" class="px-3.5 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-2xs">
+                            ⚡ Kiểm tra kết nối AI ngay
+                        </button>
+                        <span id="sys-ping-result" class="text-[11px] font-bold text-slate-600 text-right"></span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">Lấy khóa miễn phí tại <strong>aistudio.google.com/apikey</strong>. Khóa chỉ lưu cục bộ trên trình duyệt của máy này.</p>
                 </div>
             </div>
         </div>
@@ -1097,8 +1069,9 @@
         // =====================================================================
         // DỮ LIỆU MẪU & CẤU HÌNH 8 PHÂN HỆ
         // =====================================================================
-        const apiKey = ""; // Môi trường thực thi tự động cung cấp hoặc dùng key cá nhân lưu trong localStorage
+        const apiKey = "";
         const STORAGE_KEY = 'deutschstudio_pro_data_v6';
+        const CUSTOM_API_STORAGE_KEY = 'deutschstudio_custom_gemini_key';
 
         const NAV_TABS = [
             { id: 'analyzer', label: 'Sửa câu', full: 'Phân tích & Sửa lỗi' },
@@ -1125,7 +1098,6 @@
             'Đi khám bác sĩ vì bị đau họng'
         ];
 
-        // 8 CHỦ ĐỀ LỚN & 26 TÌNH HUỐNG NHỎ CHO HỘI THOẠI NGƯỜI BẢN XỨ AI
         const ROLEPLAY_CATEGORIES = [
             {
                 id: 'daily', name: '1. Đời sống hằng ngày',
@@ -1312,12 +1284,10 @@
             }
         }
 
-        // Biến trạng thái từng phân hệ
         let activeTabId = 'analyzer';
         let germanVoice = null;
         let lastAnalyzerReport = null;
 
-        // Studio state
         let studioSentences = ['Hallo! Ich heiße Minh und komme aus Vietnam.', 'Ich lerne seit sechs Monaten Deutsch.'];
         let studioIndex = 0;
         let studioRecorder = null;
@@ -1325,13 +1295,11 @@
         let isStudioRecording = false;
         let lastStudioEval = null;
 
-        // Free speaking state
         let fsRecorder = null;
         let fsChunks = [];
         let isFsRecording = false;
         let lastFsEval = null;
 
-        // Roleplay state
         let activeRpMode = 'scenario';
         let activeRpCategory = 'daily';
         let selectedRpScenario = { categoryName: '1. Đời sống hằng ngày', ...ROLEPLAY_CATEGORIES[0].scenarios[0] };
@@ -1355,7 +1323,6 @@
         let rpReflexSeconds = 20;
         let lastRpSummary = null;
 
-        // Drills state
         let currentDictation = {
             de: 'Ich möchte heute Abend mit meinen Freunden ins Kino gehen.',
             vi: 'Tối nay tôi muốn đi xem phim cùng với các bạn của tôi.',
@@ -1373,14 +1340,12 @@
         let trfCountdownTimer = null;
         let trfSeconds = 15;
 
-        // Phonetics state
         let activePhGroupIdx = 0;
         let activePhoneticWord = 'die Küche';
         let phRecorder = null;
         let phChunks = [];
         let isPhRecording = false;
 
-        // Multimodal & Warmup state
         let pendingMmFile = null;
         let extractedMmResult = null;
         let wuWords = [];
@@ -1397,31 +1362,25 @@
             try {
                 loadAppDataSafely();
                 updateDailyStreak();
+                updateHeaderAiIndicator();
                 renderNavBar();
                 initSpeechSynthesis();
 
-                // Analyzer init
                 renderAnalyzerPresets();
                 document.getElementById('analyzer-input').value = ANALYZER_PRESETS[0].text;
 
-                // Studio init
                 renderStudioSentence();
-
-                // Free Speaking init
                 renderFreeSpeakingTopics();
 
-                // Roleplay init
                 renderRoleplayCategories();
                 selectRoleplayCategory('daily');
                 renderMissionsSelector();
                 renderPersonalMemoryBanner();
 
-                // Phonetics init
                 renderCustomPhoneticWords();
                 renderPhoneticPresetGroups();
                 selectPhoneticPresetGroup(0);
 
-                // Notebook & Review init
                 renderNotebook();
                 renderReviewTab();
             } catch (err) {
@@ -1432,7 +1391,7 @@
         });
 
         // =====================================================================
-        // TIỆN ÍCH CHUNG, TTS TIẾNG ĐỨC & GỌI GEMINI API
+        // TIỆN ÍCH CHUNG, TTS TIẾNG ĐỨC & CHUẨN HÓA KẾT NỐI GOOGLE AI STUDIO API
         // =====================================================================
         function escapeHTML(str) {
             if (str === null || str === undefined) return '';
@@ -1458,7 +1417,7 @@
             setTimeout(() => {
                 el.style.opacity = '0';
                 setTimeout(() => el.remove(), 300);
-            }, 3400);
+            }, 4200);
         }
 
         function insertChar(inputId, char) {
@@ -1512,7 +1471,6 @@
             if (tabId === 'review') renderReviewTab();
         }
 
-        // Giọng đọc tiếng Đức de-DE
         function initSpeechSynthesis() {
             if (!('speechSynthesis' in window)) return;
             const pickVoice = () => {
@@ -1559,46 +1517,145 @@
             });
         }
 
-        function getEffectiveGeminiKey() {
-            try {
-                const saved = localStorage.getItem('deutschstudio_custom_gemini_key');
-                if (saved && saved.trim()) return saved.trim();
-            } catch (e) {}
-            return apiKey;
+        function sanitizeApiKeyString(raw) {
+            return String(raw || '').trim().replace(/[\r\n\s"']+/g, '');
         }
 
+        function getEffectiveGeminiKey() {
+            try {
+                const saved = localStorage.getItem(CUSTOM_API_STORAGE_KEY);
+                const cleanSaved = sanitizeApiKeyString(saved);
+                if (cleanSaved) return cleanSaved;
+            } catch (e) {}
+            return sanitizeApiKeyString(apiKey);
+        }
+
+        function updateHeaderAiIndicator() {
+            const key = getEffectiveGeminiKey();
+            const dot = document.getElementById('header-ai-dot');
+            const label = document.getElementById('header-ai-label');
+            const badge = document.getElementById('sys-key-badge');
+
+            if (key) {
+                const tail = key.length > 4 ? key.slice(-4) : '****';
+                if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
+                if (label) label.textContent = 'AI Sẵn sàng';
+                if (badge) {
+                    badge.textContent = `Đã lưu Key (...${tail})`;
+                    badge.className = 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800';
+                }
+            } else {
+                if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-500';
+                if (label) label.textContent = 'Nhập Key AI';
+                if (badge) {
+                    badge.textContent = 'Chưa nhập Key';
+                    badge.className = 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800';
+                }
+            }
+        }
+
+        // Bóc tách JSON an toàn ngay cả khi AI bọc trong ```json ... ```
+        function extractCleanJSONText(rawText) {
+            if (!rawText) throw new Error('Phản hồi AI trống.');
+            let clean = String(rawText).trim();
+            const fenced = clean.match(/```(?:json)?\s*([\s\S]*?)```/i);
+            if (fenced && fenced[1]) {
+                clean = fenced[1].trim();
+            }
+            const firstBrace = clean.indexOf('{');
+            const lastBrace = clean.lastIndexOf('}');
+            if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+                clean = clean.slice(firstBrace, lastBrace + 1);
+            }
+            return clean;
+        }
+
+        function translateGeminiHttpError(status, detailMsg) {
+            const lower = String(detailMsg || '').toLowerCase();
+            if (status === 400 && (lower.includes('api key not valid') || lower.includes('api_key_invalid'))) {
+                return 'Lỗi 400: API Key không hợp lệ. Hãy kiểm tra lại mã AIza... trong mục Hệ thống AI.';
+            }
+            if (status === 403) {
+                return 'Lỗi 403: API Key bị từ chối quyền truy cập hoặc dự án chưa bật Generative Language API.';
+            }
+            if (status === 404) {
+                return 'Lỗi 404: Không tìm thấy mô hình AI trên tài khoản này.';
+            }
+            if (status === 429) {
+                return 'Lỗi 429: Vượt giới hạn lượt gọi miễn phí/phút. Vui lòng đợi khoảng 30 giây rồi thử lại.';
+            }
+            return `Lỗi kết nối AI (HTTP ${status}): ${detailMsg ? detailMsg.slice(0, 110) : 'Vui lòng thử lại.'}`;
+        }
+
+        // Hàm gọi Google AI Studio API chuẩn hóa kèm fallback tự động giữa các mô hình ổn định
         async function callGeminiAPI(payload) {
             const key = getEffectiveGeminiKey();
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(key)}`;
-            let delay = 1000;
-            for (let attempt = 0; attempt < 3; attempt++) {
+            if (!key) {
+                openSystemDrawer();
+                throw new Error('Bạn chưa nhập Gemini API Key! Hãy dán mã từ Google AI Studio vào hộp thoại Hệ thống AI.');
+            }
+
+            const candidateModels = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+            let lastReadableError = 'Không thể kết nối tới máy chủ Google AI.';
+
+            for (let i = 0; i < candidateModels.length; i++) {
+                const modelName = candidateModels[i];
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(key)}`;
+
                 try {
                     const response = await fetch(url, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
+
                     if (!response.ok) {
-                        const errText = await response.text();
-                        throw new Error(`HTTP ${response.status}: ${errText}`);
+                        let detail = '';
+                        try {
+                            const errJson = await response.json();
+                            detail = errJson?.error?.message || JSON.stringify(errJson);
+                        } catch (_) {
+                            detail = await response.text();
+                        }
+
+                        lastReadableError = translateGeminiHttpError(response.status, detail);
+
+                        // Nếu sai API Key (400/403) hoặc hết quota (429) thì dừng ngay, không cần thử model khác
+                        if (response.status === 400 || response.status === 403 || response.status === 429) {
+                            throw new Error(lastReadableError);
+                        }
+                        // Nếu 404 hoặc 503 thì thử tiếp model dự phòng tiếp theo
+                        continue;
                     }
+
                     const json = await response.json();
-                    const text = json?.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (!text) throw new Error('AI không trả về dữ liệu.');
-                    return text;
+                    const rawText = json?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (!rawText) {
+                        lastReadableError = 'AI phản hồi rỗng. Hãy thử diễn đạt lại nội dung.';
+                        continue;
+                    }
+
+                    if (payload?.generationConfig?.responseMimeType === 'application/json') {
+                        return extractCleanJSONText(rawText);
+                    }
+                    return rawText;
                 } catch (err) {
-                    if (attempt === 2) throw err;
-                    await new Promise(r => setTimeout(r, delay));
-                    delay *= 2;
+                    if (err.message && (err.message.startsWith('Lỗi 400') || err.message.startsWith('Lỗi 403') || err.message.startsWith('Lỗi 429'))) {
+                        throw err;
+                    }
+                    lastReadableError = err.message || 'Lỗi mạng khi gọi Google AI Studio.';
                 }
             }
+
+            throw new Error(lastReadableError);
         }
 
-        // System Drawer & Backup JSON
+        // System Drawer & Kiểm tra kết nối trực tiếp
         function openSystemDrawer() {
             const modal = document.getElementById('system-drawer-modal');
             const input = document.getElementById('sys-api-key-input');
-            if (input) input.value = localStorage.getItem('deutschstudio_custom_gemini_key') || '';
+            if (input) input.value = getEffectiveGeminiKey();
+            updateHeaderAiIndicator();
             initSpeechSynthesis();
             modal.classList.remove('hidden');
         }
@@ -1606,12 +1663,55 @@
             document.getElementById('system-drawer-modal').classList.add('hidden');
         }
         function saveCustomApiKey() {
-            const val = document.getElementById('sys-api-key-input').value.trim();
-            if (val) localStorage.setItem('deutschstudio_custom_gemini_key', val);
-            else localStorage.removeItem('deutschstudio_custom_gemini_key');
-            showToast('Đã lưu cấu hình Gemini API Key!', 'success');
-            closeSystemDrawer();
+            const rawVal = document.getElementById('sys-api-key-input').value;
+            const cleanVal = sanitizeApiKeyString(rawVal);
+            document.getElementById('sys-api-key-input').value = cleanVal;
+
+            if (cleanVal) {
+                localStorage.setItem(CUSTOM_API_STORAGE_KEY, cleanVal);
+                updateHeaderAiIndicator();
+                showToast('Đã lưu API Key! Bấm "Kiểm tra kết nối AI ngay" để xác nhận.', 'success');
+            } else {
+                localStorage.removeItem(CUSTOM_API_STORAGE_KEY);
+                updateHeaderAiIndicator();
+                showToast('Đã xóa API Key khỏi trình duyệt.', 'info');
+            }
         }
+
+        async function testGeminiConnection() {
+            saveCustomApiKey();
+            const key = getEffectiveGeminiKey();
+            const resEl = document.getElementById('sys-ping-result');
+            const btn = document.getElementById('btn-test-gemini-ping');
+
+            if (!key) {
+                resEl.className = 'text-[11px] font-bold text-rose-600 text-right';
+                resEl.textContent = 'Vui lòng dán API Key trước!';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Đang kiểm tra...';
+            resEl.className = 'text-[11px] font-bold text-slate-500 text-right';
+            resEl.textContent = 'Đang gửi tín hiệu tới Google AI...';
+
+            try {
+                const reply = await callGeminiAPI({
+                    contents: [{ parts: [{ text: 'Antworte nur mit: OK' }] }]
+                });
+                resEl.className = 'text-[11px] font-extrabold text-emerald-700 text-right';
+                resEl.textContent = `✓ Kết nối thành công (${reply.trim().slice(0, 12)})`;
+                showToast('Kết nối Google AI Studio thành công! Bạn có thể dùng mọi tính năng.', 'success');
+            } catch (err) {
+                resEl.className = 'text-[11px] font-bold text-rose-600 text-right';
+                resEl.textContent = err.message;
+                showToast(err.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '⚡ Kiểm tra kết nối AI ngay';
+            }
+        }
+
         async function testMicrophoneAccess() {
             const btn = document.getElementById('sys-mic-status');
             try {
@@ -1776,7 +1876,7 @@
                 resBox.classList.remove('hidden');
             } catch (err) {
                 console.error(err);
-                showToast('Không thể kết nối AI lúc này. Hãy thử lại!', 'error');
+                showToast(err.message || 'Không thể kết nối AI lúc này.', 'error');
             } finally {
                 loading.classList.add('hidden');
             }
@@ -1899,7 +1999,7 @@
             } else {
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : 'audio/webm';
+                    const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : (MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : 'audio/webm');
                     studioRecorder = new MediaRecorder(stream, { mimeType: mime });
                     studioChunks = [];
                     studioRecorder.ondataavailable = e => { if (e.data.size > 0) studioChunks.push(e.data); };
@@ -2003,7 +2103,7 @@
                 resBox.classList.remove('hidden');
             } catch (err) {
                 console.error(err);
-                showToast('Không thể chấm điểm lúc này. Bạn hãy thử thu âm lại nhé!', 'error');
+                showToast(err.message || 'Không thể chấm điểm lúc này.', 'error');
             } finally {
                 loading.classList.add('hidden');
             }
@@ -2054,7 +2154,7 @@
             } else {
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : 'audio/webm';
+                    const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : (MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : 'audio/webm');
                     fsRecorder = new MediaRecorder(stream, { mimeType: mime });
                     fsChunks = [];
                     fsRecorder.ondataavailable = e => { if (e.data.size > 0) fsChunks.push(e.data); };
@@ -2134,7 +2234,7 @@
                 resBox.classList.remove('hidden');
             } catch (err) {
                 console.error(err);
-                showToast('AI chưa nghe rõ đoạn nói. Bạn hãy thử nói lại gần mic hơn nhé!', 'error');
+                showToast(err.message || 'AI chưa nghe rõ đoạn nói.', 'error');
             } finally {
                 loading.classList.add('hidden');
             }
@@ -2360,7 +2460,7 @@ Trả về JSON: { aiDe: "câu mở đầu tiếng Đức phù hợp trình đ�
                 });
             } catch (err) {
                 console.error(err);
-                showToast('Không thể khởi tạo buổi hội thoại. Hãy thử lại!', 'error');
+                showToast(err.message || 'Không thể khởi tạo buổi hội thoại.', 'error');
             } finally {
                 btn.disabled = false;
                 btn.textContent = '📞 Bắt đầu Hội thoại bằng Giọng nói ngay';
@@ -2503,7 +2603,7 @@ Trả về JSON: { aiDe: "câu mở đầu tiếng Đức phù hợp trình đ�
                 renderRoleplayMessages();
                 speakGerman(data.simpleDe, 0.8);
             } catch (e) {
-                showToast('Không thể diễn đạt lại lúc này.', 'error');
+                showToast(e.message || 'Không thể diễn đạt lại lúc này.', 'error');
             }
         }
 
@@ -2554,7 +2654,7 @@ Trả về JSON: { aiDe: "câu mở đầu tiếng Đức phù hợp trình đ�
                     </div>
                 `).join('');
             } catch (e) {
-                items.innerHTML = '<p class="text-xs text-rose-600">Không tải được gợi ý.</p>';
+                items.innerHTML = `<p class="text-xs text-rose-600">${escapeHTML(e.message || 'Không tải được gợi ý.')}</p>`;
             }
         }
 
@@ -2574,7 +2674,7 @@ Trả về JSON: { aiDe: "câu mở đầu tiếng Đức phù hợp trình đ�
             } else {
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : 'audio/webm';
+                    const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : (MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : 'audio/webm');
                     rpRecorder = new MediaRecorder(stream, { mimeType: mime });
                     rpChunks = [];
                     rpRecorder.ondataavailable = e => { if (e.data.size > 0) rpChunks.push(e.data); };
@@ -2702,7 +2802,7 @@ Hãy nghe file audio thực tế và trả về JSON:
                 });
             } catch (err) {
                 console.error(err);
-                showToast('AI chưa nghe rõ câu trả lời. Bạn hãy thử nói lại nhé!', 'error');
+                showToast(err.message || 'AI chưa nghe rõ câu trả lời.', 'error');
             } finally {
                 status.textContent = 'AI sẽ nghe giọng nói thực tế của bạn, chấm 4 khía cạnh và đáp lại tự nhiên';
             }
@@ -2827,7 +2927,7 @@ Hãy nghe file audio thực tế và trả về JSON:
                 document.getElementById('dict-hint-text').textContent = `Gợi ý: ${currentDictation.hint}`;
                 speakGerman(currentDictation.de, 0.95);
             } catch (e) {
-                showToast('Không thể tạo câu nghe mới lúc này.', 'error');
+                showToast(e.message || 'Không thể tạo câu nghe mới lúc này.', 'error');
             }
         }
 
@@ -2908,7 +3008,7 @@ Hãy nghe file audio thực tế và trả về JSON:
                     }, 1000);
                 });
             } catch (e) {
-                showToast('Không thể tạo thử thách lúc này.', 'error');
+                showToast(e.message || 'Không thể tạo thử thách lúc này.', 'error');
             }
         }
 
@@ -2922,7 +3022,7 @@ Hãy nghe file audio thực tế và trả về JSON:
             } else {
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : 'audio/webm';
+                    const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : (MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : 'audio/webm');
                     trfRecorder = new MediaRecorder(stream, { mimeType: mime });
                     trfChunks = [];
                     trfRecorder.ondataavailable = e => { if (e.data.size > 0) trfChunks.push(e.data); };
@@ -2982,7 +3082,7 @@ Hãy nghe file audio thực tế và trả về JSON:
                 document.getElementById('trf-result-box').classList.remove('hidden');
                 recordPronunciationProgress(data.score, data.correctedAnswer, []);
             } catch (e) {
-                showToast('Không thể chấm điểm lúc này.', 'error');
+                showToast(e.message || 'Không thể chấm điểm lúc này.', 'error');
             }
         }
 
@@ -3086,6 +3186,7 @@ Hãy nghe file audio thực tế và trả về JSON:
                 input.value = '';
                 renderCustomPhoneticWords();
                 selectPhoneticTargetWord(rawVal);
+                showToast(e.message || 'Đã thêm từ (chưa tải được tự động giống).', 'info');
             } finally {
                 btn.disabled = false;
                 btn.textContent = '+ Thêm từ luyện';
@@ -3103,7 +3204,6 @@ Hãy nghe file audio thực tế và trả về JSON:
             document.getElementById('ph-score-banner').classList.add('hidden');
             document.getElementById('ph-playback-box').classList.add('hidden');
 
-            // Hiển thị huy hiệu màu giống danh từ nếu có
             const badge = document.getElementById('ph-gender-badge');
             const lower = word.toLowerCase();
             if (lower.startsWith('der ')) {
@@ -3122,7 +3222,6 @@ Hãy nghe file audio thực tế và trả về JSON:
                 badge.classList.add('hidden');
             }
 
-            // Hiển thị ghi chú lỗi cần lưu ý từ lần đọc trước nếu có
             const mem = appData.phoneticMemory[lower];
             const mistakeBox = document.getElementById('ph-last-mistake-note');
             if (mem && mem.lastMistake) {
@@ -3177,7 +3276,7 @@ Hãy nghe file audio thực tế và trả về JSON:
                 renderUnlockedPhoneticDetails(info);
                 speakGerman(activePhoneticWord, 0.9);
             } catch (e) {
-                showToast('Không thể tải chi tiết từ vựng lúc này.', 'error');
+                showToast(e.message || 'Không thể tải chi tiết từ vựng lúc này.', 'error');
             }
         }
 
@@ -3201,7 +3300,7 @@ Hãy nghe file audio thực tế và trả về JSON:
             } else {
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : 'audio/webm';
+                    const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : (MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : 'audio/webm');
                     phRecorder = new MediaRecorder(stream, { mimeType: mime });
                     phChunks = [];
                     phRecorder.ondataavailable = e => { if (e.data.size > 0) phChunks.push(e.data); };
@@ -3294,7 +3393,7 @@ Hãy nghe file audio thực tế và trả về JSON:
 
                 recordPronunciationProgress(data.score, word, [{ word, isCorrect: data.isCorrect, issue: data.mistakeForNextTime }]);
             } catch (e) {
-                showToast('Không thể chấm điểm lúc này. Bạn có thể bấm Mở khóa để xem đáp án!', 'error');
+                showToast(e.message || 'Không thể chấm điểm lúc này.', 'error');
             }
         }
 
@@ -3390,7 +3489,6 @@ Hãy nghe file audio thực tế và trả về JSON:
             const activeErrors = Object.values(appData.errorBank).filter(e => !e.mastered);
             document.getElementById('rv-stat-errors').textContent = activeErrors.length;
 
-            // Render Heatmap 6 nhóm âm
             const hmGrid = document.getElementById('rv-heatmap-grid');
             hmGrid.innerHTML = HEATMAP_GROUPS.map(grp => {
                 const pct = getGroupHeatmapPct(grp);
@@ -3416,7 +3514,6 @@ Hãy nghe file audio thực tế và trả về JSON:
                 `;
             }).join('');
 
-            // Render Error Bank
             const ebBox = document.getElementById('rv-error-bank-list');
             if (activeErrors.length === 0) {
                 ebBox.innerHTML = `<div class="col-span-full p-6 text-center text-xs text-slate-400 bg-slate-50 rounded-2xl border border-dashed">Tuyệt vời! Bạn chưa có từ nào tồn đọng trong Ngân hàng lỗi.</div>`;
@@ -3436,7 +3533,6 @@ Hãy nghe file audio thực tế và trả về JSON:
             }
         }
 
-        // Khởi động 2 phút (5 từ trọng tâm)
         function openTwoMinuteWarmup(forcedId = null) {
             let target = HEATMAP_GROUPS[2];
             if (forcedId) {
@@ -3497,7 +3593,7 @@ Hãy nghe file audio thực tế và trả về JSON:
             } else {
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : 'audio/webm';
+                    const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : (MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : 'audio/webm');
                     wuRecorder = new MediaRecorder(stream, { mimeType: mime });
                     wuChunks = [];
                     wuRecorder.ondataavailable = e => { if (e.data.size > 0) wuChunks.push(e.data); };
@@ -3529,7 +3625,7 @@ Hãy nghe file audio thực tế và trả về JSON:
                             fb.textContent = `${res.passed ? '✅ Đạt' : '⚠️ Cần chỉnh'} (${res.score}/100): ${res.tipVi}`;
                             recordPronunciationProgress(res.score, w.word, [{ word: w.word, isCorrect: res.passed, issue: res.tipVi }]);
                         } catch (e) {
-                            fb.textContent = 'Không thể chấm lúc này, bấm Tiếp tục.';
+                            fb.textContent = e.message || 'Không thể chấm lúc này, bấm Tiếp tục.';
                         }
                     };
                     wuRecorder.start();
@@ -3634,7 +3730,7 @@ Hãy nghe file audio thực tế và trả về JSON:
 
                 resBox.classList.remove('hidden');
             } catch (e) {
-                showToast('Không thể trích xuất từ tệp này. Hãy thử ảnh rõ hơn!', 'error');
+                showToast(e.message || 'Không thể trích xuất từ tệp này.', 'error');
             } finally {
                 loading.classList.add('hidden');
             }
@@ -3667,4 +3763,4 @@ Hãy nghe file audio thực tế và trả về JSON:
         }
     </script>
 </body>
-  </html>
+            </html>
