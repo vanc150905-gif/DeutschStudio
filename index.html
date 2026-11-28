@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DeutschStudio Pro v6.0.2 - Luyện Phát Âm & Giao Tiếp Tiếng Đức AI</title>
+    <title>DeutschStudio Pro v6.0.3 - Luyện Phát Âm & Giao Tiếp Tiếng Đức AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Noto+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <script>
@@ -68,10 +68,10 @@
                             DeutschStudio <span class="text-teal-600">Pro</span>
                         </h1>
                         <span class="px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-200">
-                            v6.0.2
+                            v6.0.3
                         </span>
                     </div>
-                    <p class="text-[11px] text-slate-500 hidden md:block mt-0.5">Luyện Ngữ pháp, Hội thoại Người bản xứ &amp; Phát âm Tiếng Đức AI</p>
+                    <p class="text-[11px] text-slate-500 hidden md:block mt-0.5">Tự động Dò Mô hình AI • Luyện Giao tiếp &amp; Phát âm Tiếng Đức</p>
                 </div>
             </div>
 
@@ -81,7 +81,7 @@
                     <span id="header-streak-text">1 ngày</span>
                 </div>
 
-                <button onclick="openSystemDrawer()" class="px-2.5 sm:px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center gap-1.5 transition" title="Cấu hình Gemini API Key, Micro & Giọng đọc">
+                <button onclick="openSystemDrawer()" class="px-2.5 sm:px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center gap-1.5 transition" title="Cấu hình Gemini API Key, Auto-Model, Micro & Giọng đọc">
                     <span id="header-ai-dot" class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
                     <span id="header-ai-label">Hệ thống AI</span>
                 </button>
@@ -906,10 +906,10 @@
     </main>
 
     <!-- ======================================================================= -->
-    <!-- MODAL 1: KIỂM TRA HỆ THỐNG AI, MICRO, GIỌNG ĐỌC & API KEY               -->
+    <!-- MODAL 1: KIỂM TRA HỆ THỐNG AI, AUTO-MODEL DISCOVERY, MICRO & GIỌNG ĐỌC   -->
     <!-- ======================================================================= -->
-    <div id="system-drawer-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 border border-slate-200 shadow-2xl space-y-4">
+    <div id="system-drawer-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 border border-slate-200 shadow-2xl space-y-4 my-auto">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                 <h3 class="font-extrabold text-lg text-slate-900">Trạng thái Hệ thống &amp; Google AI</h3>
                 <button onclick="closeSystemDrawer()" class="w-8 h-8 rounded-xl bg-slate-100 text-slate-600 font-bold">✕</button>
@@ -930,7 +930,7 @@
                 </div>
 
                 <div class="p-3.5 rounded-2xl bg-teal-50/60 border border-teal-200 space-y-2.5">
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between gap-2">
                         <label class="font-extrabold text-xs text-teal-950">🔑 Gemini API Key (Google AI Studio):</label>
                         <span id="sys-key-badge" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800">Chưa nhập Key</span>
                     </div>
@@ -938,13 +938,26 @@
                         <input type="password" id="sys-api-key-input" class="flex-1 rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-mono" placeholder="AIzaSy...">
                         <button onclick="saveCustomApiKey()" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs">Lưu</button>
                     </div>
-                    <div class="flex items-center justify-between gap-2 pt-1">
-                        <button id="btn-test-gemini-ping" onclick="testGeminiConnection()" class="px-3.5 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-2xs">
-                            ⚡ Kiểm tra kết nối AI ngay
-                        </button>
-                        <span id="sys-ping-result" class="text-[11px] font-bold text-slate-600 text-right"></span>
+
+                    <!-- BỘ DÒ MÔ HÌNH TỰ ĐỘNG (AUTO-MODEL DISCOVERY) -->
+                    <div class="bg-white rounded-xl p-2.5 border border-teal-200/80 space-y-1.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-[11px] font-bold text-slate-500">Mô hình AI đang dùng:</span>
+                            <span id="sys-active-model-badge" class="px-2 py-0.5 rounded-lg bg-slate-100 text-slate-800 font-mono text-[11px] font-bold">Tự động dò</span>
+                        </div>
+                        <div id="sys-discovered-models-wrapper" class="hidden pt-1 border-t border-slate-100 space-y-1">
+                            <label class="block text-[10px] font-bold uppercase text-slate-400">Danh sách mô hình khả dụng trên Key của bạn:</label>
+                            <select id="sys-model-selector" onchange="onManualModelSelect(this.value)" class="w-full rounded-lg border border-slate-200 bg-slate-50 px-2 py-1 text-xs font-mono font-bold text-slate-800"></select>
+                        </div>
                     </div>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">Lấy khóa miễn phí tại <strong>aistudio.google.com/apikey</strong>. Khóa chỉ lưu cục bộ trên trình duyệt của máy này.</p>
+
+                    <div class="flex flex-col gap-1.5 pt-1">
+                        <button id="btn-test-gemini-ping" onclick="testGeminiConnection()" class="w-full py-2.5 px-3.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-xs shadow-2xs transition">
+                            ⚡ Dò mô hình &amp; Kiểm tra kết nối AI ngay
+                        </button>
+                        <p id="sys-ping-result" class="text-[11px] font-bold text-slate-600 leading-snug"></p>
+                    </div>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">Hệ thống sẽ tự động dò danh sách mô hình được mở trên tài khoản của bạn để tránh lỗi 404.</p>
                 </div>
             </div>
         </div>
@@ -1059,7 +1072,9 @@
                     'deutschstudio_pro_data_v6',
                     'deutschstudio_pro_data_v5',
                     'deutschstudio_pro_data_v4',
-                    'deutschstudio_pro_data_v3'
+                    'deutschstudio_pro_data_v3',
+                    'deutschstudio_active_model',
+                    'deutschstudio_discovered_models'
                 ];
                 keysToClear.forEach(k => localStorage.removeItem(k));
             } catch (e) {}
@@ -1072,6 +1087,8 @@
         const apiKey = "";
         const STORAGE_KEY = 'deutschstudio_pro_data_v6';
         const CUSTOM_API_STORAGE_KEY = 'deutschstudio_custom_gemini_key';
+        const ACTIVE_MODEL_STORAGE_KEY = 'deutschstudio_active_model';
+        const DISCOVERED_MODELS_STORAGE_KEY = 'deutschstudio_discovered_models';
 
         const NAV_TABS = [
             { id: 'analyzer', label: 'Sửa câu', full: 'Phân tích & Sửa lỗi' },
@@ -1391,7 +1408,7 @@
         });
 
         // =====================================================================
-        // TIỆN ÍCH CHUNG, TTS TIẾNG ĐỨC & CHUẨN HÓA KẾT NỐI GOOGLE AI STUDIO API
+        // TIỆN ÍCH CHUNG, TTS TIẾNG ĐỨC & AUTO-MODEL DISCOVERY ENGINE (V6.0.3)
         // =====================================================================
         function escapeHTML(str) {
             if (str === null || str === undefined) return '';
@@ -1530,8 +1547,72 @@
             return sanitizeApiKeyString(apiKey);
         }
 
+        function getCachedActiveModel() {
+            try {
+                return localStorage.getItem(ACTIVE_MODEL_STORAGE_KEY) || '';
+            } catch (e) {
+                return '';
+            }
+        }
+
+        function setCachedActiveModel(modelName) {
+            try {
+                if (modelName) localStorage.setItem(ACTIVE_MODEL_STORAGE_KEY, modelName);
+                else localStorage.removeItem(ACTIVE_MODEL_STORAGE_KEY);
+            } catch (e) {}
+            updateHeaderAiIndicator();
+        }
+
+        function getCachedDiscoveredModels() {
+            try {
+                const raw = localStorage.getItem(DISCOVERED_MODELS_STORAGE_KEY);
+                const parsed = raw ? JSON.parse(raw) : [];
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function setCachedDiscoveredModels(models) {
+            try {
+                localStorage.setItem(DISCOVERED_MODELS_STORAGE_KEY, JSON.stringify(models || []));
+            } catch (e) {}
+            renderDiscoveredModelsUI();
+        }
+
+        function renderDiscoveredModelsUI() {
+            const models = getCachedDiscoveredModels();
+            const active = getCachedActiveModel();
+            const wrapper = document.getElementById('sys-discovered-models-wrapper');
+            const selector = document.getElementById('sys-model-selector');
+            const badge = document.getElementById('sys-active-model-badge');
+
+            if (badge) {
+                badge.textContent = active || 'Tự động dò khi chạy';
+                badge.className = active
+                    ? 'px-2 py-0.5 rounded-lg bg-emerald-100 text-emerald-800 font-mono text-[11px] font-bold'
+                    : 'px-2 py-0.5 rounded-lg bg-slate-100 text-slate-800 font-mono text-[11px] font-bold';
+            }
+
+            if (wrapper && selector) {
+                if (models.length > 0) {
+                    wrapper.classList.remove('hidden');
+                    selector.innerHTML = models.map(m => `<option value="${escapeHTML(m)}" ${m === active ? 'selected' : ''}>${escapeHTML(m)}</option>`).join('');
+                } else {
+                    wrapper.classList.add('hidden');
+                }
+            }
+        }
+
+        function onManualModelSelect(modelName) {
+            if (!modelName) return;
+            setCachedActiveModel(modelName);
+            showToast(`Đã chuyển sang mô hình: ${modelName}`, 'info');
+        }
+
         function updateHeaderAiIndicator() {
             const key = getEffectiveGeminiKey();
+            const activeModel = getCachedActiveModel();
             const dot = document.getElementById('header-ai-dot');
             const label = document.getElementById('header-ai-label');
             const badge = document.getElementById('sys-key-badge');
@@ -1539,7 +1620,7 @@
             if (key) {
                 const tail = key.length > 4 ? key.slice(-4) : '****';
                 if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
-                if (label) label.textContent = 'AI Sẵn sàng';
+                if (label) label.textContent = activeModel ? activeModel.replace('gemini-', 'AI ') : 'AI Sẵn sàng';
                 if (badge) {
                     badge.textContent = `Đã lưu Key (...${tail})`;
                     badge.className = 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800';
@@ -1552,6 +1633,7 @@
                     badge.className = 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800';
                 }
             }
+            renderDiscoveredModelsUI();
         }
 
         // Bóc tách JSON an toàn ngay cả khi AI bọc trong ```json ... ```
@@ -1576,78 +1658,164 @@
                 return 'Lỗi 400: API Key không hợp lệ. Hãy kiểm tra lại mã AIza... trong mục Hệ thống AI.';
             }
             if (status === 403) {
-                return 'Lỗi 403: API Key bị từ chối quyền truy cập hoặc dự án chưa bật Generative Language API.';
+                return 'Lỗi 403: API Key bị từ chối quyền truy cập hoặc chưa bật Generative Language API.';
             }
             if (status === 404) {
-                return 'Lỗi 404: Không tìm thấy mô hình AI trên tài khoản này.';
+                return `Lỗi 404: Mô hình không khả dụng (${detailMsg ? detailMsg.slice(0, 75) : 'Not Found'}).`;
             }
             if (status === 429) {
-                return 'Lỗi 429: Vượt giới hạn lượt gọi miễn phí/phút. Vui lòng đợi khoảng 30 giây rồi thử lại.';
+                return 'Lỗi 429: Vượt giới hạn lượt gọi miễn phí/phút. Vui lòng đợi 30 giây rồi thử lại.';
             }
             return `Lỗi kết nối AI (HTTP ${status}): ${detailMsg ? detailMsg.slice(0, 110) : 'Vui lòng thử lại.'}`;
         }
 
-        // Hàm gọi Google AI Studio API chuẩn hóa kèm fallback tự động giữa các mô hình ổn định
-        async function callGeminiAPI(payload) {
+        // =====================================================================
+        // AUTO-MODEL DISCOVERY ENGINE: HỎI TRỰC TIẾP GOOGLE API DANH SÁCH MÔ HÌNH
+        // =====================================================================
+        function rankDiscoveredModels(modelNames) {
+            const priorityPatterns = [
+                /^gemini-2\.5-flash$/i,
+                /^gemini-2\.5-flash-lite/i,
+                /^gemini-2\.5-flash-/i,
+                /^gemini-2\.0-flash$/i,
+                /^gemini-2\.0-flash-lite/i,
+                /^gemini-2\.0-flash-/i,
+                /^gemini-1\.5-flash$/i,
+                /^gemini-1\.5-flash-/i,
+                /^gemini-2\.5-pro/i,
+                /^gemini-1\.5-pro/i,
+                /flash/i,
+                /gemini/i
+            ];
+
+            const scoreModel = (name) => {
+                for (let i = 0; i < priorityPatterns.length; i++) {
+                    if (priorityPatterns[i].test(name)) return i;
+                }
+                return 999;
+            };
+
+            return [...new Set(modelNames)].sort((a, b) => scoreModel(a) - scoreModel(b));
+        }
+
+        async function fetchAvailableModels(key) {
+            const listUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`;
+            const resp = await fetch(listUrl, { method: 'GET' });
+
+            if (!resp.ok) {
+                let detail = '';
+                try {
+                    const errJson = await resp.json();
+                    detail = errJson?.error?.message || JSON.stringify(errJson);
+                } catch (_) {
+                    detail = await resp.text();
+                }
+                throw new Error(translateGeminiHttpError(resp.status, detail));
+            }
+
+            const data = await resp.json();
+            const rawModels = Array.isArray(data.models) ? data.models : [];
+
+            const validNames = rawModels
+                .filter(m => {
+                    const methods = Array.isArray(m.supportedGenerationMethods) ? m.supportedGenerationMethods : [];
+                    const cleanName = String(m.name || '').replace(/^models\//, '').toLowerCase();
+                    const isExcluded = cleanName.includes('embedding')
+                        || cleanName.includes('imagen')
+                        || cleanName.includes('veo')
+                        || cleanName.includes('aqa')
+                        || cleanName.includes('tts')
+                        || cleanName.includes('robotics')
+                        || cleanName.includes('computer-use');
+                    return methods.includes('generateContent') && !isExcluded && cleanName.includes('gemini');
+                })
+                .map(m => String(m.name || '').replace(/^models\//, '').trim())
+                .filter(Boolean);
+
+            const ranked = rankDiscoveredModels(validNames);
+            if (ranked.length === 0) {
+                throw new Error('Tài khoản này chưa có mô hình Gemini nào hỗ trợ generateContent. Hãy bật Generative Language API trên Google AI Studio.');
+            }
+
+            setCachedDiscoveredModels(ranked);
+            return ranked;
+        }
+
+        async function executeSingleModelCall(modelName, key, payload) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelName)}:generateContent?key=${encodeURIComponent(key)}`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                let detail = '';
+                try {
+                    const errJson = await response.json();
+                    detail = errJson?.error?.message || JSON.stringify(errJson);
+                } catch (_) {
+                    detail = await response.text();
+                }
+                const err = new Error(translateGeminiHttpError(response.status, detail));
+                err.httpStatus = response.status;
+                throw err;
+            }
+
+            const json = await response.json();
+            const rawText = json?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (!rawText) {
+                const err = new Error('AI phản hồi rỗng. Hãy thử diễn đạt lại nội dung.');
+                err.httpStatus = 204;
+                throw err;
+            }
+
+            if (payload?.generationConfig?.responseMimeType === 'application/json') {
+                return extractCleanJSONText(rawText);
+            }
+            return rawText;
+        }
+
+        async function callGeminiAPI(payload, forceFreshDiscovery = false) {
             const key = getEffectiveGeminiKey();
             if (!key) {
                 openSystemDrawer();
                 throw new Error('Bạn chưa nhập Gemini API Key! Hãy dán mã từ Google AI Studio vào hộp thoại Hệ thống AI.');
             }
 
-            const candidateModels = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
-            let lastReadableError = 'Không thể kết nối tới máy chủ Google AI.';
-
-            for (let i = 0; i < candidateModels.length; i++) {
-                const modelName = candidateModels[i];
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(key)}`;
-
+            // 1. Thử mô hình đang lưu trong cache trước (nếu không ép dò lại)
+            const cachedModel = !forceFreshDiscovery ? getCachedActiveModel() : '';
+            if (cachedModel) {
                 try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        let detail = '';
-                        try {
-                            const errJson = await response.json();
-                            detail = errJson?.error?.message || JSON.stringify(errJson);
-                        } catch (_) {
-                            detail = await response.text();
-                        }
-
-                        lastReadableError = translateGeminiHttpError(response.status, detail);
-
-                        // Nếu sai API Key (400/403) hoặc hết quota (429) thì dừng ngay, không cần thử model khác
-                        if (response.status === 400 || response.status === 403 || response.status === 429) {
-                            throw new Error(lastReadableError);
-                        }
-                        // Nếu 404 hoặc 503 thì thử tiếp model dự phòng tiếp theo
-                        continue;
-                    }
-
-                    const json = await response.json();
-                    const rawText = json?.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (!rawText) {
-                        lastReadableError = 'AI phản hồi rỗng. Hãy thử diễn đạt lại nội dung.';
-                        continue;
-                    }
-
-                    if (payload?.generationConfig?.responseMimeType === 'application/json') {
-                        return extractCleanJSONText(rawText);
-                    }
-                    return rawText;
+                    return await executeSingleModelCall(cachedModel, key, payload);
                 } catch (err) {
-                    if (err.message && (err.message.startsWith('Lỗi 400') || err.message.startsWith('Lỗi 403') || err.message.startsWith('Lỗi 429'))) {
+                    if (err.httpStatus === 400 || err.httpStatus === 403 || err.httpStatus === 429) {
                         throw err;
                     }
-                    lastReadableError = err.message || 'Lỗi mạng khi gọi Google AI Studio.';
+                    // Nếu cachedModel bị 404 hoặc lỗi tạm thời -> xóa cache và chạy Auto-Discovery
+                    setCachedActiveModel('');
                 }
             }
 
-            throw new Error(lastReadableError);
+            // 2. Tự động dò danh sách mô hình thực tế của API Key này
+            const discoveredModels = await fetchAvailableModels(key);
+            let lastErr = new Error('Không thể gọi bất kỳ mô hình AI nào trên tài khoản này.');
+
+            for (let i = 0; i < discoveredModels.length; i++) {
+                const candidate = discoveredModels[i];
+                try {
+                    const resultText = await executeSingleModelCall(candidate, key, payload);
+                    setCachedActiveModel(candidate);
+                    return resultText;
+                } catch (err) {
+                    lastErr = err;
+                    if (err.httpStatus === 400 || err.httpStatus === 403 || err.httpStatus === 429) {
+                        throw err;
+                    }
+                }
+            }
+
+            throw lastErr;
         }
 
         // System Drawer & Kiểm tra kết nối trực tiếp
@@ -1667,10 +1835,14 @@
             const cleanVal = sanitizeApiKeyString(rawVal);
             document.getElementById('sys-api-key-input').value = cleanVal;
 
+            // Xóa cache mô hình cũ để tự dò lại cho Key mới
+            setCachedActiveModel('');
+            setCachedDiscoveredModels([]);
+
             if (cleanVal) {
                 localStorage.setItem(CUSTOM_API_STORAGE_KEY, cleanVal);
                 updateHeaderAiIndicator();
-                showToast('Đã lưu API Key! Bấm "Kiểm tra kết nối AI ngay" để xác nhận.', 'success');
+                showToast('Đã lưu API Key! Bấm "Dò mô hình & Kiểm tra kết nối AI ngay".', 'success');
             } else {
                 localStorage.removeItem(CUSTOM_API_STORAGE_KEY);
                 updateHeaderAiIndicator();
@@ -1679,36 +1851,44 @@
         }
 
         async function testGeminiConnection() {
-            saveCustomApiKey();
+            const rawVal = document.getElementById('sys-api-key-input').value;
+            const cleanVal = sanitizeApiKeyString(rawVal);
+            document.getElementById('sys-api-key-input').value = cleanVal;
+            if (cleanVal) {
+                localStorage.setItem(CUSTOM_API_STORAGE_KEY, cleanVal);
+            }
+
             const key = getEffectiveGeminiKey();
             const resEl = document.getElementById('sys-ping-result');
             const btn = document.getElementById('btn-test-gemini-ping');
 
             if (!key) {
-                resEl.className = 'text-[11px] font-bold text-rose-600 text-right';
+                resEl.className = 'text-[11px] font-bold text-rose-600 leading-snug';
                 resEl.textContent = 'Vui lòng dán API Key trước!';
                 return;
             }
 
             btn.disabled = true;
-            btn.textContent = 'Đang kiểm tra...';
-            resEl.className = 'text-[11px] font-bold text-slate-500 text-right';
-            resEl.textContent = 'Đang gửi tín hiệu tới Google AI...';
+            btn.textContent = '⏳ Đang dò danh sách mô hình từ Google AI...';
+            resEl.className = 'text-[11px] font-bold text-slate-500 leading-snug';
+            resEl.textContent = 'Đang truy vấn danh sách mô hình khả dụng trên tài khoản của bạn...';
 
             try {
                 const reply = await callGeminiAPI({
                     contents: [{ parts: [{ text: 'Antworte nur mit: OK' }] }]
-                });
-                resEl.className = 'text-[11px] font-extrabold text-emerald-700 text-right';
-                resEl.textContent = `✓ Kết nối thành công (${reply.trim().slice(0, 12)})`;
-                showToast('Kết nối Google AI Studio thành công! Bạn có thể dùng mọi tính năng.', 'success');
+                }, true);
+                const activeModel = getCachedActiveModel();
+                resEl.className = 'text-[11px] font-extrabold text-emerald-700 leading-snug';
+                resEl.textContent = `✓ Kết nối thành công! Đang dùng: ${activeModel} (${reply.trim().slice(0, 12)})`;
+                showToast(`Kết nối thành công với mô hình ${activeModel}!`, 'success');
             } catch (err) {
-                resEl.className = 'text-[11px] font-bold text-rose-600 text-right';
+                resEl.className = 'text-[11px] font-bold text-rose-600 leading-snug';
                 resEl.textContent = err.message;
                 showToast(err.message, 'error');
             } finally {
                 btn.disabled = false;
-                btn.textContent = '⚡ Kiểm tra kết nối AI ngay';
+                btn.textContent = '⚡ Dò mô hình & Kiểm tra kết nối AI ngay';
+                updateHeaderAiIndicator();
             }
         }
 
@@ -3763,4 +3943,4 @@ Hãy nghe file audio thực tế và trả về JSON:
         }
     </script>
 </body>
-            </html>
+</html>
